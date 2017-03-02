@@ -31,7 +31,7 @@ class ResetPassword extends React.Component {
             this.setState({updateFailed: true});
             console.log('Password Reset Error: ', error);
           } else {
-            message.success('密码更新成功！', 3);
+            message.success('Password updated successfully!', 3);
             console.log('Password updated successfully!');
             FlowRouter.redirect('/');
           }
@@ -47,7 +47,7 @@ class ResetPassword extends React.Component {
   checkPassowrd(rule, value, callback) {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('两次输入的密码不一致！');
+      callback('The two passwords you typed do not match');
     } else {
       callback();
     }
@@ -89,7 +89,7 @@ class ResetPassword extends React.Component {
             >
               {getFieldDecorator('password', {
                 rules: [{
-                  required: true, message: '请输入密码',
+                  required: true, message: 'Please input your password',
                 }, {
                   validator: this.checkConfirm.bind(this),
                 }],
@@ -104,7 +104,7 @@ class ResetPassword extends React.Component {
             >
               {getFieldDecorator('confirm', {
                 rules: [{
-                  required: true, message: '请确认你的密码',
+                  required: true, message: 'Please double check your password',
                 }, {
                   validator: this.checkPassowrd.bind(this),
                 }],
@@ -118,7 +118,7 @@ class ResetPassword extends React.Component {
               </Button>
             </FormItem>
             { this.state.updateFailed ?
-              <Alert message="链接已经过期" type="error"/>
+              <Alert message="The link has expired" type="error"/>
               : null
             }
           </Form>

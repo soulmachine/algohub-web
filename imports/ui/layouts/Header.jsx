@@ -34,7 +34,7 @@ const NotificationBadge = createContainer(() => {
     return (
       <a href="/notifications">
         <Badge count={unreadCount}>
-          消息
+          Messages
         </Badge>
       </a>
     );
@@ -76,7 +76,7 @@ class Header extends React.Component {
       menu = [
         <Menu mode={this.state.menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
           <Menu.Item key="home">
-            <a href="/">首页</a>
+            <a href="/">Home</a>
           </Menu.Item>
           <Menu.Item key="todo">
             <a href="/todo">Todo</a>
@@ -86,16 +86,16 @@ class Header extends React.Component {
           </Menu.Item>
           <SubMenu title={<span><Icon type="user"/>{this.props.currentUser.username}</span>} id="navsubmenu">
             <Menu.Item key="people">
-              <a href={'/people/' + this.props.currentUser.username}>我的主页</a>
+              <a href={'/people/' + this.props.currentUser.username}>My Homepage</a>
             </Menu.Item>
             <Menu.Item key="inbox">
-              <a href='/inbox'>私信</a>
+              <a href='/inbox'>My Inbox</a>
             </Menu.Item>
             <Menu.Item key="settings">
-              <a href='/settings'>设置</a>
+              <a href='/settings'>Settings</a>
             </Menu.Item>
             <Menu.Item key="logout">
-              <a href='/logout'>退出</a>
+              <a href='/logout'>Log Out</a>
             </Menu.Item>
           </SubMenu>
         </Menu>,
@@ -105,10 +105,10 @@ class Header extends React.Component {
         Session.set("previous-url", FlowRouter.current().path);
       }
       menu = [
-        <span className="lang" key='loginsignup'><a href="/login">登录</a>{' '}<a href="/signup">注册</a></span>,
+        <span className="lang" key='loginsignup'><a href="/login">Login</a>{' '}<a href="/signup">Signup</a></span>,
         <Menu mode={this.state.menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
           <Menu.Item key="home">
-            <a href="/">首页</a>
+            <a href="/">Home</a>
           </Menu.Item>
           <Menu.Item key="todo">
             <a href="/todo">Todo</a>

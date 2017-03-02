@@ -26,7 +26,7 @@ if (Meteor.isServer) {
     else groupBy[x.owner] = [x];
   });
 
-  for (var userId in groupBy) {
+  for (let userId in groupBy) {
     NotificationTotalCounters.update(
       { owner: userId },
       { $set: { owner: userId, count: groupBy[userId].length } },

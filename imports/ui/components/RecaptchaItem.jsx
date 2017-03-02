@@ -13,7 +13,7 @@ const RecaptchaItem = React.createClass({
         <Helmet
           script={[
             {
-              "src": "https://www.google.com/recaptcha/api.js?hl=zh_CN",
+              "src": "https://www.google.com/recaptcha/api.js?hl=en_US",
               "type": "text/javascript",
               "async": true,
               "defer": true

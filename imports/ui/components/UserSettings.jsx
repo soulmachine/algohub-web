@@ -53,10 +53,10 @@ const ProfileTab = Form.create()(React.createClass({
       if (value !== this.props.currentUser.nickname) {
         callback();
       } else {
-        callback('昵称没有变化');
+        callback('Nickname has no change');
       }
     } else {
-      callback('昵称为空');
+      callback('Nickname is empty');
     }
   },
   handleSubmit(e) {
@@ -71,7 +71,7 @@ const ProfileTab = Form.create()(React.createClass({
             console.log(error);
           } else {
             this.setState({updateFailed: false});
-            message.success("更新成功！", 3);
+            message.success("Updated successfully", 3);
           }
         });
       }
@@ -84,7 +84,7 @@ const ProfileTab = Form.create()(React.createClass({
       <Form onSubmit={this.handleSubmit} style={styles.loginForm}>
         <FormItem
           {...formItemLayout}
-          label="用户名"
+          label="Username"
         >
           <Input disabled value={this.props.currentUser ? this.props.currentUser.username : null } />
         </FormItem>
@@ -96,7 +96,7 @@ const ProfileTab = Form.create()(React.createClass({
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="昵称"
+          label="Nickname"
         >
           {getFieldDecorator('nickname', {
             rules: [{
@@ -108,11 +108,11 @@ const ProfileTab = Form.create()(React.createClass({
         </FormItem>
         <FormItem>
           <Button type="primary" htmlType="submit">
-            保存
+            Save
           </Button>
         </FormItem>
         { this.state.updateFailed ?
-          <Alert message="保存失败" type="error"/>
+          <Alert message="Save failed" type="error"/>
           : null
         }
       </Form>
@@ -135,10 +135,10 @@ const ChangePasswordForm = Form.create()(React.createClass({
         console.log('Received values of form: ', values);
         Accounts.changePassword(values.old_password, values.password, (error) => {
           if (error) {
-            message.error("旧密码不正确，密码更新失败", 3);
+            message.error("The old password is incorrect", 3);
             console.error(error);
           } else {
-            message.success("密码更新成功", 3);
+            message.success("Password updated successfully", 3);
           }
         });
       }
@@ -151,10 +151,10 @@ const ChangePasswordForm = Form.create()(React.createClass({
   checkPassowrd(rule, value, callback) {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('两次输入的密码不一致！');
+      callback('The two passwords you typed do not match');
     } else {
       if (value && value == form.getFieldValue('old_password')) {
-        callback('新密码与旧密码一样');
+        callback('The new password is the same as the old one');
       } else {
         callback();
       }
@@ -179,12 +179,12 @@ const ChangePasswordForm = Form.create()(React.createClass({
         <Form horizontal onSubmit={this.handleSubmit} style={{maxWidth: 300}}>
           <FormItem
             {...formItemLayout}
-            label="旧密码"
+            label="Old password"
             hasFeedback
           >
             {getFieldDecorator('old_password', {
               rules: [{
-                required: true, message: '请输入旧密码',
+                required: true, message: 'Please input your old password',
               }],
             })(
               <Input type="password" />
@@ -192,12 +192,12 @@ const ChangePasswordForm = Form.create()(React.createClass({
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="新密码"
+            label="New password"
             hasFeedback
           >
             {getFieldDecorator('password', {
               rules: [{
-                required: true, message: '请输入密码',
+                required: true, message: 'Please input the password',
               }, {
                 validator: this.checkConfirm,
               }],
@@ -207,12 +207,12 @@ const ChangePasswordForm = Form.create()(React.createClass({
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="确认新密码"
+            label="Confirm new Password"
             hasFeedback
           >
             {getFieldDecorator('confirm', {
               rules: [{
-                required: true, message: '请确认你的密码',
+                required: true, message: 'Please confirm your password',
               }, {
                 validator: this.checkPassowrd,
               }],
@@ -221,13 +221,13 @@ const ChangePasswordForm = Form.create()(React.createClass({
             )}
           </FormItem>
           <FormItem>
-            <Button type="primary" htmlType="submit">确定</Button>
+            <Button type="primary" htmlType="submit">Submit</Button>
           </FormItem>
         </Form>
       );
     } else {
       return (
-        <a href="javascript:;" onClick={() => this.setState({showChangePaswordForm: true})}>修改密码</a>
+        <a href="javascript:;" onClick={() => this.setState({showChangePaswordForm: true})}>Change password</a>
       );
     }
   }
@@ -246,10 +246,10 @@ const AccountTab = React.createClass({
   resendEmail() {
     Meteor.call('sendVerificationEmail', (error, result)=> {
       if (error) {
-        message.error("验证邮件重发失败", 3);
+        message.error("Password reset E-mail resent failed", 3);
         console.error(error);
       } else {
-        message.success("验证邮件重发成功", 3);
+        message.success("Password reset E-mail resent successfully", 3);
       }
     });
 
@@ -268,21 +268,21 @@ const AccountTab = React.createClass({
     return (
       <div>
         <Row>
-          <Col span={1}>邮箱：</Col>
+          <Col span={1}>E-mail:</Col>
           <Col span={12}>
             { this.props.currentUser ? this.props.currentUser.emails[0].address + (this.props.currentUser.emails[0].verified ? "(已验证)" : null) : null}
             <br />
             { this.props.currentUser && !this.props.currentUser.emails[0].verified ?
               <span>
-                <Alert message="你的邮箱尚未激活，请查收邮件激活。激活后你就可以使用发帖，点评等功能啦。" type="warning" />
-                <Button type="primary" onClick={this.resendEmail} disabled={this.state.counter!=TIME_OUT}>{this.state.counter != TIME_OUT ? "再发一次("+this.state.counter+")" : "再发一次"}</Button>
+                <Alert message="Your E-mail is not verified, please check your E-mail and click the activation link." type="warning" />
+                <Button type="primary" onClick={this.resendEmail} disabled={this.state.counter!=TIME_OUT}>{this.state.counter != TIME_OUT ? "Send again("+this.state.counter+")" : "Send again"}</Button>
               </span>
               : null
             }
           </Col>
         </Row>
         <Row>
-          <Col span={1}>密码：</Col>
+          <Col span={1}>Password:</Col>
           <Col span={12}><ChangePasswordForm /></Col>
         </Row>
       </div>
@@ -299,9 +299,9 @@ class UserSettings extends React.Component {
         <div style={{height: '48px', borderBottom: "1px solid #e9e9e9", background: "#fff"}}>
           <div style={{padding: '0 50px'}}>
             <Menu mode="horizontal" selectedKeys={['settings/' + activeTab]} style={{marginLeft: 124}}>
-              <Menu.Item key="settings/profile"><a href="/settings/profile">基本资料</a></Menu.Item>
-            <Menu.Item key="settings/account"><a href="/settings/account">账号和密码</a></Menu.Item>
-              <Menu.Item key="settings/notifications"><a href="/settings/notifications">消息和通知</a></Menu.Item>
+              <Menu.Item key="settings/profile"><a href="/settings/profile">My profile</a></Menu.Item>
+            <Menu.Item key="settings/account"><a href="/settings/account">Account</a></Menu.Item>
+              <Menu.Item key="settings/notifications"><a href="/settings/notifications">Notifications</a></Menu.Item>
             </Menu>
           </div>
         </div>

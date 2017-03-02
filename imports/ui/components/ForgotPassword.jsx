@@ -35,7 +35,7 @@ class ForgotPassword extends React.Component {
           if (result) {
             callback();
           } else {
-            callback('该E-mail不存在');
+            callback('This E-mail does NOT exist');
           }
         }
       });
@@ -88,7 +88,7 @@ class ForgotPassword extends React.Component {
       alert = this.state.failed ?
         <Alert message={this.state.failureReason} type="error"/>
         :
-        <Alert message='密码重置邮件已经发送，请查收' type="success"/>
+        <Alert message='A password reset email has been sent, please check your email' type="success"/>
     } else {
       alert = null;
     }
@@ -100,15 +100,15 @@ class ForgotPassword extends React.Component {
           <FormItem>
             {getFieldDecorator('email', {
               rules: [{
-                type: 'email', message: '输入的E-mail地址不符合格式',
+                type: 'email', message: 'Illegal E-mail address',
               }, {
-                required: true, message: '请输入你的E-mail地址',
+                required: true, message: 'Please input your E-mail',
               }, {
                 validator: this.emailExists.bind(this),
               }],
               validateTrigger: 'onBlur',
             })(
-              <Input addonBefore={<Icon type="mail" />} placeholder="请输入你的E-mail" />
+              <Input addonBefore={<Icon type="mail" />} placeholder="Please input your E-mail" />
             )}
           </FormItem>
 

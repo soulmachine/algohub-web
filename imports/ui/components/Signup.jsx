@@ -48,13 +48,13 @@ class Signup extends React.Component {
             console.log('Signup failed with error: ', error);
             if (error.message.includes("reCAPTCHA")) {
               console.log("Captcha verification failed");
-              this.setState({signupFailed: true, failedReason: "验证码校验失败！"});
+              this.setState({signupFailed: true, failedReason: "Incorrect captcha"});
             } else {
-              this.setState({signupFailed: true, failedReason: "注册失败，未知错误！"});
+              this.setState({signupFailed: true, failedReason: "Signup failed, unknown internal error"});
             }
           }
           else {
-            message.success("注册成功，请查收邮件激活账户", 3);
+            message.success("Signup successfully, please check your E-mail", 3);
             const previous = Session.get('previous-url');
             if (previous) FlowRouter.redirect(Session.get('previous-url'));
             else FlowRouter.redirect('/');
@@ -71,7 +71,7 @@ class Signup extends React.Component {
   checkPassowrd(rule, value, callback) {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('两次输入的密码不一致！');
+      callback('The two passwords you typed do not match');
     } else {
       callback();
     }
@@ -92,7 +92,7 @@ class Signup extends React.Component {
           callback();
         } else {
           if (result) {
-            callback('该用户名已经存在');
+            callback('The username already exists');
 
           } else {
             callback();
@@ -112,7 +112,7 @@ class Signup extends React.Component {
           callback();
         } else {
           if (result) {
-            callback('该E-mail已经存在');
+            callback('The E-mail already exists');
           } else {
             callback();
           }
@@ -126,12 +126,12 @@ class Signup extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 11 },
+      wrapperCol: { span: 12 },
     };
 
     const beginYear=  (new Date().getFullYear())-80;
-    const years = [...Array(63).keys()].map((x)=>x+beginYear);
+    const years = [...Array(77).keys()].map((x)=>x+beginYear);
 
     return (
       <Form horizontal onSubmit={this.handleSubmit.bind(this)} style={{maxWidth: 300}}>
@@ -139,8 +139,8 @@ class Signup extends React.Component {
           {...formItemLayout}
           label={(
             <span>
-              用户名&nbsp;
-              <Tooltip title="用户名是登录时的唯一ID">
+              Username&nbsp;
+              <Tooltip title="Username as the unique ID">
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
@@ -149,7 +149,7 @@ class Signup extends React.Component {
         >
           {getFieldDecorator('username', {
             rules: [{
-              required: true, message: '请输入用户名'
+              required: true, message: 'Please input username'
             }, { validator: this.usernameExists.bind(this)
             }],
             validateTrigger: 'onBlur',
@@ -159,12 +159,12 @@ class Signup extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="密码"
+          label="Password"
           hasFeedback
         >
           {getFieldDecorator('password', {
             rules: [{
-              required: true, message: '请输入密码',
+              required: true, message: 'Please input password',
             }, {
               validator: this.checkConfirm.bind(this),
             }],
@@ -174,12 +174,12 @@ class Signup extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="确认密码"
+          label="Re-enter password"
           hasFeedback
         >
           {getFieldDecorator('confirm', {
             rules: [{
-              required: true, message: '请确认你的密码',
+              required: true, message: 'Please double check the password',
             }, {
               validator: this.checkPassowrd.bind(this),
             }],
@@ -194,9 +194,9 @@ class Signup extends React.Component {
         >
           {getFieldDecorator('email', {
             rules: [{
-              type: 'email', message: '输入的E-mail地址不符合格式',
+              type: 'email', message: 'Illegal E-mail address',
             }, {
-              required: true, message: '请输入你的E-mail地址',
+              required: true, message: 'Please input your E-mail',
             }, {
               validator: this.emailExists.bind(this),
             }],
@@ -207,25 +207,25 @@ class Signup extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="性别"
+          label="Gender"
           hasFeedback
         >
           {getFieldDecorator('gender', {
-            rules: [{ required: true, message: '请选择一个性别' }],
+            rules: [{ required: true, message: 'Please choose your gender' }],
           })(
             <RadioGroup>
-              <Radio key="male" value='male'>男</Radio>
-              <Radio key="female" value='female'>女</Radio>
+              <Radio key="male" value='male'>Male</Radio>
+              <Radio key="female" value='female'>Female</Radio>
             </RadioGroup>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="出生年份"
+          label="Birthday"
           hasFeedback
         >
           {getFieldDecorator('birthyear', {
-            rules: [{ required: true, message: '请选择一个出生年份' }],
+            rules: [{ required: true, message: 'Please choose your birthday' }],
           })(
             <Select size="large" style={{ width: 100 }}>
               { years.map((year)=> {
@@ -241,9 +241,9 @@ class Signup extends React.Component {
           })(<RecaptchaItem />)}
         </FormItem>
         <FormItem>
-          <Button type="primary" htmlType="submit" style={{width: '100%'}}>注册</Button>
+          <Button type="primary" htmlType="submit" style={{width: '100%'}}>Create Account</Button>
         </FormItem>
-        <span>点击「注册」按钮，即代表你同意<a href="/terms">《用户协议》</a></span>
+        <span>By clicking Create Account, you agree to our <a href="/terms">Terms</a></span>
         { this.state.signupFailed ?
           <Alert message={this.state.failedReason} type="error"/>
           : null

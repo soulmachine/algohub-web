@@ -34,7 +34,7 @@ class Login extends React.Component {
           Meteor.call('verifyCaptcha', values.captcha, (error, result) => {
             if (error) {
               console.log("Captcha verification failed with error: ", error);
-              this.setState({ loginFailed: true, failedReason: '验证码错误' });
+              this.setState({ loginFailed: true, failedReason: 'Incorrect captcha' });
             } else {
               if (result) {
                 Meteor.loginWithPassword(values.username, values.password, (error) => {
@@ -42,10 +42,10 @@ class Login extends React.Component {
                     localStorage.setItem("login-failed-count", (this.state.loginFailedCount+1).toString());
                     this.setState({
                       loginFailed: true, loginFailedCount: (this.state.loginFailedCount + 1),
-                      failedReason: '用户名或密码错误'
+                      failedReason: 'Incorrect username or password'
                     });
                   } else {
-                    message.success("登录成功！", 3);
+                    message.success("Logged in successfully!", 3);
                     localStorage.removeItem("login-failed-count");
                     const previous = Session.get('previous-url');
                     if (previous) FlowRouter.redirect(Session.get('previous-url'));
@@ -55,7 +55,7 @@ class Login extends React.Component {
                 });
               } else {
                 console.log("Captcha verification failed");
-                this.setState({ loginFailed: true, failedReason: '验证码错误' });
+                this.setState({ loginFailed: true, failedReason: 'Incorrect captcha' });
               }
             }
           });
@@ -65,10 +65,10 @@ class Login extends React.Component {
               localStorage.setItem("login-failed-count", (this.state.loginFailedCount+1).toString());
               this.setState({
                 loginFailed: true, loginFailedCount: (this.state.loginFailedCount + 1),
-                failedReason: '用户名或密码错误'
+                failedReason: 'Incorrect username or password'
               });
             } else {
-              message.success("登录成功！", 3);
+              message.success("Logged in successfully!", 3);
               localStorage.removeItem("login-failed-count");
               const previous = Session.get('previous-url');
               if (previous) FlowRouter.redirect(Session.get('previous-url'));
@@ -98,16 +98,16 @@ class Login extends React.Component {
       <Form onSubmit={this.handleSubmit.bind(this)} style={styles.loginForm}>
         <FormItem>
           {getFieldDecorator('username', {
-            rules: [{ required: true, message: '请输入用户名或E-mail' }],
+            rules: [{ required: true, message: 'Please input username or E-mail' }],
           })(
-            <Input addonBefore={<Icon type="user" />} placeholder="用户名或E-mail" />
+            <Input addonBefore={<Icon type="user" />} placeholder="Username or E-mail" />
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: '请输入密码！' }],
+            rules: [{ required: true, message: 'Must input password!' }],
           })(
-            <Input addonBefore={<Icon type="lock" />} type="password" placeholder="密码" />
+            <Input addonBefore={<Icon type="lock" />} type="password" placeholder="password" />
           )}
         </FormItem>
         { this.state.loginFailedCount > 5 ?
@@ -124,13 +124,13 @@ class Login extends React.Component {
             valuePropName: 'checked',
             initialValue: true,
           })(
-            <Checkbox>记住我</Checkbox>
+            <Checkbox>Remember Me</Checkbox>
           )}
-          <a className="login-form-forgot" href='/forgot-password' style={styles.loginFormForgot}>忘记密码</a>
+          <a className="login-form-forgot" href='/forgot-password' style={styles.loginFormForgot}>Forgot password</a>
           <Button type="primary" htmlType="submit" style={styles.loginFormButton}>
-            登录
+            Login
           </Button>
-          或者 <a href="/signup">现在注册！</a>
+          Or <a href="/signup">Signup Now</a>
         </FormItem>
         { this.state.loginFailed ?
           <Alert message={this.state.failedReason} type="error"/>

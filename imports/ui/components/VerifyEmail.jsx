@@ -30,13 +30,13 @@ export default class VerifyEmail extends React.Component {
           <div style={{ height: 210 }}>
             { this.state.verificationFailed ?
               <Alert
-                message="邮箱验证失败"
-                description='链接已经过期。请登录后点击右上角"设置->账号和密码"，重新发送邮件'
+                message="E-mail verify failed"
+                description='The link has been expired, please resent the password reset E-mail'
                 type="error"
                 showIcon
               />
               :
-              <Alert message="邮箱验证成功" type="success" showIcon />
+              <Alert message="E-mail verified successfully" type="success" showIcon />
             }
           </div>
         </Col>
