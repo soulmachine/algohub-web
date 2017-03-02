@@ -34,7 +34,7 @@ const NotificationBadge = createContainer(() => {
     return (
       <a href="/notifications">
         <Badge count={unreadCount}>
-          Messages
+          Notifications
         </Badge>
       </a>
     );
@@ -76,20 +76,20 @@ class Header extends React.Component {
       menu = [
         <Menu mode={this.state.menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
           <Menu.Item key="home">
-            <a href="/">Home</a>
+            <a href="/">Problems</a>
           </Menu.Item>
-          <Menu.Item key="todo">
-            <a href="/todo">Todo</a>
+          <Menu.Item key="discussions">
+            <a href="/discussions">Discussions</a>
           </Menu.Item>
-          <Menu.Item key="notifications">
-            <NotificationBadge />
+          <Menu.Item key="solutions">
+            <a href="/solutions">Solutions</a>
           </Menu.Item>
           <SubMenu title={<span><Icon type="user"/>{this.props.currentUser.username}</span>} id="navsubmenu">
             <Menu.Item key="people">
               <a href={'/people/' + this.props.currentUser.username}>My Homepage</a>
             </Menu.Item>
-            <Menu.Item key="inbox">
-              <a href='/inbox'>My Inbox</a>
+            <Menu.Item key="notifications">
+              <NotificationBadge />
             </Menu.Item>
             <Menu.Item key="settings">
               <a href='/settings'>Settings</a>
@@ -108,7 +108,7 @@ class Header extends React.Component {
         <span className="lang" key='loginsignup'><a href="/login">Login</a>{' '}<a href="/signup">Signup</a></span>,
         <Menu mode={this.state.menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
           <Menu.Item key="home">
-            <a href="/">Home</a>
+            <a href="/">Problems</a>
           </Menu.Item>
           <Menu.Item key="todo">
             <a href="/todo">Todo</a>
@@ -135,12 +135,12 @@ class Header extends React.Component {
           <Col lg={4} md={6} sm={24} xs={24}>
             <a href="/" id="logo">
               <img alt="logo" src="https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg" />
-              <span>Ant Design</span>
+              <span>AlgoHub</span>
             </a>
           </Col>
           <Col lg={20} md={18} sm={17} xs={0} style={{ display: 'block' }}>
             <div id="search-box">
-              <Search placeholder="搜索你感兴趣的内容..."
+              <Search placeholder="Enter keywords to search..."
                       onSearch={value => console.log(value)} style={{ width: 300 }} />
             </div>
             {this.state.menuMode === 'horizontal' ? menu : null}
