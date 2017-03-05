@@ -17,7 +17,7 @@ module.exports = {
   "general.save": "Save",
   "header.enter keywords": "Enter keywords to search...",
   "header.problems": "Problems",
-  "header.discussions": "Discussions",
+  "header.qa": "Q&A",
   "header.solutions": "Solutions",
   "header.homepage": "My Homepage",
   "header.notifications": "Notifications",

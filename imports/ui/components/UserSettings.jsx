@@ -171,8 +171,8 @@ const ChangePasswordForm = injectIntl(Form.create()(React.createClass({
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
-      labelCol: { span: 7 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 12 },
+      wrapperCol: { span: 9 },
     };
 
     if (this.state.showChangePaswordForm) {

@@ -17,7 +17,7 @@ module.exports = {
   "general.save": "保存",
   "header.enter keywords": "Enter keywords to search...",
   'header.problems': '题目',
-  "header.discussions": "讨论",
+  "header.qa": "问答",
   "header.solutions": "题解",
   "header.homepage": "我的主页",
   "header.notifications": "通知",

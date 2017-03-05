@@ -80,7 +80,7 @@ class Header extends React.Component {
             <a href="/"><FormattedMessage id='header.problems' defaultMessage='Problems' /></a>
           </Menu.Item>
           <Menu.Item key="discussions">
-            <a href="/discussions"><FormattedMessage id='header.discussions' defaultMessage='Discussions' /></a>
+            <a href="/q"><FormattedMessage id='header.qa' defaultMessage='Q&A' /></a>
           </Menu.Item>
           <Menu.Item key="solutions">
             <a href="/solutions"><FormattedMessage id='header.solutions' defaultMessage='Solutions' /></a>
