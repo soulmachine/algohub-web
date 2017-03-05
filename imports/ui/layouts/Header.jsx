@@ -102,11 +102,11 @@ class Header extends React.Component {
         </Menu>,
       ]
     } else {
-      if (FlowRouter.current().path != '/login' && FlowRouter.current().path != '/signup') {
+      if (FlowRouter.current().path != '/signin' && FlowRouter.current().path != '/signup') {
         Session.set("previous-url", FlowRouter.current().path);
       }
       menu = [
-        <span className="lang" key='loginsignup'><a href="/login"><FormattedMessage id='general.signin' defaultMessage='Sign in' /></a>{' '}<a href="/signup"><FormattedMessage id='general.signup' defaultMessage='Sign up' /></a></span>,
+        <span className="lang" key='loginsignup'><a href="/signin"><FormattedMessage id='general.signin' defaultMessage='Sign in' /></a>{' '}<a href="/signup"><FormattedMessage id='general.signup' defaultMessage='Sign up' /></a></span>,
         <Menu mode={this.state.menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
           <Menu.Item key="home">
             <a href="/"><FormattedMessage id='header.problems' defaultMessage='Problems' /></a>

@@ -4,16 +4,16 @@ import 'antd/dist/antd.css';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 
-import Login from '../components/Login';
+import Signin from '../components/Signin';
 
-function LoginPage() {
+function SigninPage() {
   return (
     <Row>
       <Col span={8} offset={8}>
-        <Login />
+        <Signin />
       </Col>
     </Row>
   )
 }
 
-export default LoginPage;
+export default SigninPage;

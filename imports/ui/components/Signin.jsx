@@ -15,7 +15,7 @@ import RecaptchaItem from './RecaptchaItem';
 
 const FormItem = Form.Item;
 
-class Login extends React.Component {
+class Signin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,6 @@ class Login extends React.Component {
     console.log("loginFailedCount", this.state.loginFailedCount);
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         if (this.state.loginFailedCount > 5) {
           Meteor.call('verifyCaptcha', values.captcha, (error, result) => {
             if (error) {
@@ -125,13 +124,13 @@ class Login extends React.Component {
             valuePropName: 'checked',
             initialValue: true,
           })(
-            <Checkbox><FormattedMessage id='login.remember me' defaultMessage='Remember Me' /></Checkbox>
+            <Checkbox><FormattedMessage id='signin.remember me' defaultMessage='Remember Me' /></Checkbox>
           )}
-          <a className="login-form-forgot" href='/forgot-password' style={styles.loginFormForgot}><FormattedMessage id='login.forgot password' defaultMessage='Forgot password' /></a>
+          <a className="login-form-forgot" href='/forgot-password' style={styles.loginFormForgot}><FormattedMessage id='signin.forgot password' defaultMessage='Forgot password' /></a>
           <Button type="primary" htmlType="submit" style={styles.loginFormButton}>
             <FormattedMessage id='general.signin' defaultMessage='Sign in' />
           </Button>
-          <FormattedMessage id='login.or' defaultMessage='Or' /> <a href="/signup"><FormattedMessage id='login.sign up now' defaultMessage='Sign up Now' /></a>
+          <FormattedMessage id='signin.or' defaultMessage='Or' /> <a href="/signup"><FormattedMessage id='signin.sign up now' defaultMessage='Sign up Now' /></a>
         </FormItem>
         { this.state.loginFailed ?
           <Alert message={this.state.failedReason} type="error"/>
@@ -142,4 +141,4 @@ class Login extends React.Component {
   }
 };
 
-export default injectIntl(Form.create()(Login));
+export default injectIntl(Form.create()(Signin));
