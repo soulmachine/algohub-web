@@ -26,7 +26,6 @@ module.exports = {
   "footer.terms": "用户协议",
   "footer.faq": "常见问题",
   "footer.contact us": "联系我们",
-  "footer.select language": "选择语言",
   "signin.incorrect captcha": "验证码错误",
   "signin.incorrect username or password": "用户名或密码错误",
   "signin.signed in successfully": "登录成功！",

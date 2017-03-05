@@ -39,7 +39,7 @@ class Footer extends React.Component {
             </div>
           </li>
           <li>
-            <h2><FormattedMessage id='footer.select language' defaultMessage='Select Language' /></h2>
+            <h2>Language</h2>
             <Select defaultValue={this.props.locale} onChange={this.props.onChange}>
               <Select.Option value="en-US">English</Select.Option>
               <Select.Option value="zh-CN">简体中文</Select.Option>

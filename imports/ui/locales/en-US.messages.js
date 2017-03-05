@@ -26,7 +26,6 @@ module.exports = {
   "footer.terms": "Terms",
   "footer.faq": "FAQ",
   "footer.contact us": "Contact Us",
-  "footer.select language": "Select Language",
   "signin.incorrect captcha": "Incorrect captcha",
   "signin.incorrect username or password": "Incorrect username or password",
   "signin.signed in successfully": "Signed in successfully!",
