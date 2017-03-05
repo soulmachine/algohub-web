@@ -79,8 +79,8 @@ class Header extends React.Component {
           <Menu.Item key="home">
             <a href="/"><FormattedMessage id='header.problems' defaultMessage='Problems' /></a>
           </Menu.Item>
-          <Menu.Item key="discussions">
-            <a href="/q"><FormattedMessage id='header.qa' defaultMessage='Q&A' /></a>
+          <Menu.Item key="qa">
+            <a href="/questions"><FormattedMessage id='header.qa' defaultMessage='Q&A' /></a>
           </Menu.Item>
           <Menu.Item key="solutions">
             <a href="/solutions"><FormattedMessage id='header.solutions' defaultMessage='Solutions' /></a>
@@ -111,8 +111,11 @@ class Header extends React.Component {
           <Menu.Item key="home">
             <a href="/"><FormattedMessage id='header.problems' defaultMessage='Problems' /></a>
           </Menu.Item>
-          <Menu.Item key="todo">
-            <a href="/todo">Todo</a>
+          <Menu.Item key="qa">
+            <a href="/questions"><FormattedMessage id='header.qa' defaultMessage='Q&A' /></a>
+          </Menu.Item>
+          <Menu.Item key="solutions">
+            <a href="/solutions"><FormattedMessage id='header.solutions' defaultMessage='Solutions' /></a>
           </Menu.Item>
         </Menu>,
       ]

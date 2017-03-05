@@ -5,7 +5,6 @@ import MainLayout from '../../ui/layouts/MainLayout';
 import NotFound from '../../ui/components/NotFound';
 
 import Welcome from '../../ui/components/Welcome';
-import Todo from '../../ui/components/Todo';
 import SigninPage from '../../ui/pages/SigninPage';
 import SignupPage from '../../ui/pages/SignupPage';
 import ForgotPassword from '../../ui/components/ForgotPassword';
@@ -24,22 +23,13 @@ const loggedInRoutes = FlowRouter.group({
   }]
 });
 
-loggedInRoutes.route("/", {
+FlowRouter.route("/", {
   action() {
     mount(MainLayout, {
       children: (<Welcome />)
     });
   },
   name: 'home'
-});
-
-loggedInRoutes.route("/todo", {
-  action() {
-    mount(MainLayout, {
-      children: (<Todo />)
-    });
-  },
-  name: 'todo'
 });
 
 loggedInRoutes.route("/notifications/:page?", {
@@ -67,7 +57,7 @@ FlowRouter.notFound = {
     });
   }
 };
-FlowRouter.route('/logout', {
+loggedInRoutes.route('/logout', {
   action() {
     console.log("logout");
     Meteor.logout();
