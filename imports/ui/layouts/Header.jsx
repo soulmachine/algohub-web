@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
@@ -34,7 +35,7 @@ const NotificationBadge = createContainer(() => {
     return (
       <a href="/notifications">
         <Badge count={unreadCount}>
-          Notifications
+          <FormattedMessage id='header.notifications' defaultMessage='Notifications' />
         </Badge>
       </a>
     );
@@ -76,26 +77,26 @@ class Header extends React.Component {
       menu = [
         <Menu mode={this.state.menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
           <Menu.Item key="home">
-            <a href="/">Problems</a>
+            <a href="/"><FormattedMessage id='header.problems' defaultMessage='Problems' /></a>
           </Menu.Item>
           <Menu.Item key="discussions">
-            <a href="/discussions">Discussions</a>
+            <a href="/discussions"><FormattedMessage id='header.discussions' defaultMessage='Discussions' /></a>
           </Menu.Item>
           <Menu.Item key="solutions">
-            <a href="/solutions">Solutions</a>
+            <a href="/solutions"><FormattedMessage id='header.solutions' defaultMessage='Solutions' /></a>
           </Menu.Item>
           <SubMenu title={<span><Icon type="user"/>{this.props.currentUser.username}</span>} id="navsubmenu">
             <Menu.Item key="people">
-              <a href={'/people/' + this.props.currentUser.username}>My Homepage</a>
+              <a href={'/people/' + this.props.currentUser.username}><FormattedMessage id='header.homepage' defaultMessage='My Homepage' /></a>
             </Menu.Item>
             <Menu.Item key="notifications">
               <NotificationBadge />
             </Menu.Item>
             <Menu.Item key="settings">
-              <a href='/settings'>Settings</a>
+              <a href='/settings'><FormattedMessage id='header.settings' defaultMessage='Settings' /></a>
             </Menu.Item>
             <Menu.Item key="logout">
-              <a href='/logout'>Log Out</a>
+              <a href='/logout'><FormattedMessage id='general.signout' defaultMessage='Log Out' /></a>
             </Menu.Item>
           </SubMenu>
         </Menu>,
@@ -105,10 +106,10 @@ class Header extends React.Component {
         Session.set("previous-url", FlowRouter.current().path);
       }
       menu = [
-        <span className="lang" key='loginsignup'><a href="/login">Login</a>{' '}<a href="/signup">Signup</a></span>,
+        <span className="lang" key='loginsignup'><a href="/login"><FormattedMessage id='general.signin' defaultMessage='Sign in' /></a>{' '}<a href="/signup"><FormattedMessage id='general.signup' defaultMessage='Sign up' /></a></span>,
         <Menu mode={this.state.menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
           <Menu.Item key="home">
-            <a href="/">Problems</a>
+            <a href="/"><FormattedMessage id='header.problems' defaultMessage='Problems' /></a>
           </Menu.Item>
           <Menu.Item key="todo">
             <a href="/todo">Todo</a>

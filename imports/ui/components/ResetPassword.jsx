@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Accounts } from 'meteor/accounts-base';
 
 import 'antd/dist/antd.css';
@@ -31,7 +32,7 @@ class ResetPassword extends React.Component {
             this.setState({updateFailed: true});
             console.log('Password Reset Error: ', error);
           } else {
-            message.success('Password updated successfully!', 3);
+            message.success(this.props.intl.formatMessage({id: "resetpassword.password updated"}), 3);
             console.log('Password updated successfully!');
             FlowRouter.redirect('/');
           }
@@ -47,7 +48,7 @@ class ResetPassword extends React.Component {
   checkPassowrd(rule, value, callback) {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('The two passwords you typed do not match');
+      callback(this.props.intl.formatMessage({id: "resetpassword.two passwords"}));
     } else {
       callback();
     }
@@ -63,8 +64,8 @@ class ResetPassword extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 10 },
+      wrapperCol: { span: 10 },
     };
     const styles = {
       loginForm: {
@@ -84,12 +85,12 @@ class ResetPassword extends React.Component {
           <Form onSubmit={this.handleSubmit.bind(this)} style={styles.loginForm}>
             <FormItem
               {...formItemLayout}
-              label="密码"
+              label={this.props.intl.formatMessage({id: "general.password"})}
               hasFeedback
             >
               {getFieldDecorator('password', {
                 rules: [{
-                  required: true, message: 'Please input your password',
+                  required: true, message: this.props.intl.formatMessage({id: "signin.input password"}),
                 }, {
                   validator: this.checkConfirm.bind(this),
                 }],
@@ -99,12 +100,12 @@ class ResetPassword extends React.Component {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="确认密码"
+              label={this.props.intl.formatMessage({id: "resetpassword.retype password"})}
               hasFeedback
             >
               {getFieldDecorator('confirm', {
                 rules: [{
-                  required: true, message: 'Please double check your password',
+                  required: true, message: this.props.intl.formatMessage({id: "signin.input password"}),
                 }, {
                   validator: this.checkPassowrd.bind(this),
                 }],
@@ -114,11 +115,11 @@ class ResetPassword extends React.Component {
             </FormItem>
             <FormItem>
               <Button type="primary" htmlType="submit" style={styles.loginFormButton}>
-                确定
+                <FormattedMessage id="general.submit" defaultMessage="Submit" />
               </Button>
             </FormItem>
             { this.state.updateFailed ?
-              <Alert message="The link has expired" type="error"/>
+              <Alert message={this.props.intl.formatMessage({id: "resetpassword.link expired"})} type="error"/>
               : null
             }
           </Form>
@@ -128,4 +129,4 @@ class ResetPassword extends React.Component {
   }
 };
 
-export default Form.create()(ResetPassword);
+export default injectIntl(Form.create()(ResetPassword));

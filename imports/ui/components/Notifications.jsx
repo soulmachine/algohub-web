@@ -29,7 +29,7 @@ class Notifications extends React.Component {
     }
     return (
       <div style={{padding: "0 50px"}}>
-        <div style={{borderBottom: "1px solid #CCC", fontSize: 14, fontWeight: "bold", paddingBottom: 10}}>全部消息</div>
+        <div style={{borderBottom: "1px solid #CCC", fontSize: 14, fontWeight: "bold", paddingBottom: 10}}>All Notifications</div>
         {this.props.notifications.map((notification, i) => {
           const user = Meteor.users.findOne(notification.sender);
           return (

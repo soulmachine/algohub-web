@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
@@ -35,7 +36,7 @@ class ForgotPassword extends React.Component {
           if (result) {
             callback();
           } else {
-            callback('This E-mail does NOT exist');
+            callback(this.props.intl.formatMessage({id: "forgotpassword.email not exists"}));
           }
         }
       });
@@ -88,7 +89,7 @@ class ForgotPassword extends React.Component {
       alert = this.state.failed ?
         <Alert message={this.state.failureReason} type="error"/>
         :
-        <Alert message='A password reset email has been sent, please check your email' type="success"/>
+        <Alert message={this.props.intl.formatMessage({id: "forgotpassword.password reset email"})} type="success"/>
     } else {
       alert = null;
     }
@@ -100,26 +101,26 @@ class ForgotPassword extends React.Component {
           <FormItem>
             {getFieldDecorator('email', {
               rules: [{
-                type: 'email', message: 'Illegal E-mail address',
+                type: 'email', message: this.props.intl.formatMessage({id: "forgotpassword.illegal email address"}),
               }, {
-                required: true, message: 'Please input your E-mail',
+                required: true, message: this.props.intl.formatMessage({id: "forgotpassword.input your email"}),
               }, {
                 validator: this.emailExists.bind(this),
               }],
               validateTrigger: 'onBlur',
             })(
-              <Input addonBefore={<Icon type="mail" />} placeholder="Please input your E-mail" />
+              <Input addonBefore={<Icon type="mail" />} placeholder={this.props.intl.formatMessage({id: "forgotpassword.input your email"})} />
             )}
           </FormItem>
 
           <FormItem>
             {getFieldDecorator('captcha', {
-              rules: [{ required: true, message: 'Please input the captcha you got!' }],
+              rules: [{ required: true, message: this.props.intl.formatMessage({id: "signin.input captcha"}) }],
             })(<RecaptchaItem />)}
           </FormItem>
           <FormItem>
             <Button type="primary" htmlType="submit" style={styles.loginFormButton}>
-              提交
+              <FormattedMessage id="general.submit" defaultMessage="Submit" />
             </Button>
           </FormItem>
           {alert}
@@ -130,4 +131,4 @@ class ForgotPassword extends React.Component {
   }
 };
 
-export default Form.create()(ForgotPassword);
+export default injectIntl(Form.create()(ForgotPassword));

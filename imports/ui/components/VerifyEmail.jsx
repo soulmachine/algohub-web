@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { Accounts } from 'meteor/accounts-base';
 
 import 'antd/dist/antd.css';
@@ -6,7 +7,7 @@ import Alert from 'antd/lib/alert';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 
-export default class VerifyEmail extends React.Component {
+class VerifyEmail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,13 +31,13 @@ export default class VerifyEmail extends React.Component {
           <div style={{ height: 210 }}>
             { this.state.verificationFailed ?
               <Alert
-                message="E-mail verify failed"
-                description='The link has been expired, please resent the password reset E-mail'
+                message={this.props.intl.formatMessage({id: "verifyemail.verification failed"})}
+                description={this.props.intl.formatMessage({id: "verifyemail.link expired"})}
                 type="error"
                 showIcon
               />
               :
-              <Alert message="E-mail verified successfully" type="success" showIcon />
+              <Alert message={this.props.intl.formatMessage({id: "verifyemail.verification succeeded"})} type="success" showIcon />
             }
           </div>
         </Col>
@@ -44,3 +45,5 @@ export default class VerifyEmail extends React.Component {
     );
   }
 };
+
+export default injectIntl(VerifyEmail);

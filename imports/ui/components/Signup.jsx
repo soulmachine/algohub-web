@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
@@ -48,13 +49,13 @@ class Signup extends React.Component {
             console.log('Signup failed with error: ', error);
             if (error.message.includes("reCAPTCHA")) {
               console.log("Captcha verification failed");
-              this.setState({signupFailed: true, failedReason: "Incorrect captcha"});
+              this.setState({signupFailed: true, failedReason: this.props.intl.formatMessage({id: "signin.incorrect captcha"})});
             } else {
-              this.setState({signupFailed: true, failedReason: "Signup failed, unknown internal error"});
+              this.setState({signupFailed: true, failedReason: this.props.intl.formatMessage({id: "signup.unkown error"})});
             }
           }
           else {
-            message.success("Signup successfully, please check your E-mail", 3);
+            message.success(this.props.intl.formatMessage({id: "signup.success email"}), 3);
             const previous = Session.get('previous-url');
             if (previous) FlowRouter.redirect(Session.get('previous-url'));
             else FlowRouter.redirect('/');
@@ -71,7 +72,7 @@ class Signup extends React.Component {
   checkPassowrd(rule, value, callback) {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('The two passwords you typed do not match');
+      callback(this.props.intl.formatMessage({id: "resetpassword.two passwords"}));
     } else {
       callback();
     }
@@ -92,8 +93,7 @@ class Signup extends React.Component {
           callback();
         } else {
           if (result) {
-            callback('The username already exists');
-
+            callback(this.props.intl.formatMessage({id: "signup.username already exists"}));
           } else {
             callback();
           }
@@ -112,7 +112,7 @@ class Signup extends React.Component {
           callback();
         } else {
           if (result) {
-            callback('The E-mail already exists');
+            callback(this.props.intl.formatMessage({id: "signup.email already exists"}));
           } else {
             callback();
           }
@@ -139,8 +139,8 @@ class Signup extends React.Component {
           {...formItemLayout}
           label={(
             <span>
-              Username&nbsp;
-              <Tooltip title="Username as the unique ID">
+              {this.props.intl.formatMessage({id: "general.username"})}&nbsp;
+              <Tooltip title={this.props.intl.formatMessage({id: "signup.username unique"})}>
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
@@ -149,7 +149,7 @@ class Signup extends React.Component {
         >
           {getFieldDecorator('username', {
             rules: [{
-              required: true, message: 'Please input username'
+              required: true, message: this.props.intl.formatMessage({id: "signup.input username"}),
             }, { validator: this.usernameExists.bind(this)
             }],
             validateTrigger: 'onBlur',
@@ -159,12 +159,12 @@ class Signup extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Password"
+          label={this.props.intl.formatMessage({id: "general.password"})}
           hasFeedback
         >
           {getFieldDecorator('password', {
             rules: [{
-              required: true, message: 'Please input password',
+              required: true, message: this.props.intl.formatMessage({id: "signin.input password"}),
             }, {
               validator: this.checkConfirm.bind(this),
             }],
@@ -174,12 +174,12 @@ class Signup extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Re-enter password"
+          label={this.props.intl.formatMessage({id: "resetpassword.retype password"})}
           hasFeedback
         >
           {getFieldDecorator('confirm', {
             rules: [{
-              required: true, message: 'Please double check the password',
+              required: true, message: this.props.intl.formatMessage({id: "resetpassword.two passwords"}),
             }, {
               validator: this.checkPassowrd.bind(this),
             }],
@@ -189,14 +189,14 @@ class Signup extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="E-mail"
+          label={this.props.intl.formatMessage({id: "general.email"})}
           hasFeedback
         >
           {getFieldDecorator('email', {
             rules: [{
-              type: 'email', message: 'Illegal E-mail address',
+              type: 'email', message: this.props.intl.formatMessage({id: "forgotpassword.illegal email address"}),
             }, {
-              required: true, message: 'Please input your E-mail',
+              required: true, message: this.props.intl.formatMessage({id: "forgotpassword.input your email"}),
             }, {
               validator: this.emailExists.bind(this),
             }],
@@ -207,25 +207,25 @@ class Signup extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Gender"
+          label={this.props.intl.formatMessage({id: "general.gender"})}
           hasFeedback
         >
           {getFieldDecorator('gender', {
-            rules: [{ required: true, message: 'Please choose your gender' }],
+            rules: [{ required: true, message: this.props.intl.formatMessage({id: "signup.choose gender"}) }],
           })(
             <RadioGroup>
-              <Radio key="male" value='male'>Male</Radio>
-              <Radio key="female" value='female'>Female</Radio>
+              <Radio key="male" value='male'>{this.props.intl.formatMessage({id: "general.male"})}</Radio>
+              <Radio key="female" value='female'>{this.props.intl.formatMessage({id: "general.female"})}</Radio>
             </RadioGroup>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Birthday"
+          label={this.props.intl.formatMessage({id: "general.birthday"})}
           hasFeedback
         >
           {getFieldDecorator('birthyear', {
-            rules: [{ required: true, message: 'Please choose your birthday' }],
+            rules: [{ required: true, message: this.props.intl.formatMessage({id: "signup.input birthday"}) }],
           })(
             <Select size="large" style={{ width: 100 }}>
               { years.map((year)=> {
@@ -237,13 +237,13 @@ class Signup extends React.Component {
         </FormItem>
         <FormItem>
           {getFieldDecorator('captcha', {
-            rules: [{ required: true, message: 'Please input the captcha you got!' }],
+            rules: [{ required: true, message: this.props.intl.formatMessage({id: "signin.input captcha"})}],
           })(<RecaptchaItem />)}
         </FormItem>
         <FormItem>
-          <Button type="primary" htmlType="submit" style={{width: '100%'}}>Create Account</Button>
+          <Button type="primary" htmlType="submit" style={{width: '100%'}}>{this.props.intl.formatMessage({id: "general.signup"})}</Button>
         </FormItem>
-        <span>By clicking Create Account, you agree to our <a href="/terms">Terms</a></span>
+        <span><FormattedMessage id="signup.clicking means agree" defautMessage="By clicking Create Account, you agree to our " /> <a href="/terms">{this.props.intl.formatMessage({id: "general.terms"})}</a></span>
         { this.state.signupFailed ?
           <Alert message={this.state.failedReason} type="error"/>
           : null
@@ -253,5 +253,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Form.create()(Signup);
-
+export default injectIntl(Form.create()(Signup));
