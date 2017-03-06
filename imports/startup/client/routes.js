@@ -4,7 +4,7 @@ import {mount} from 'react-mounter';
 import MainLayout from '../../ui/layouts/MainLayout';
 import NotFound from '../../ui/components/NotFound';
 
-import Welcome from '../../ui/components/Welcome';
+import HomePage from '../../ui/pages/HomePage';
 import SigninPage from '../../ui/pages/SigninPage';
 import SignupPage from '../../ui/pages/SignupPage';
 import ForgotPassword from '../../ui/components/ForgotPassword';
@@ -26,7 +26,7 @@ const loggedInRoutes = FlowRouter.group({
 FlowRouter.route("/", {
   action() {
     mount(MainLayout, {
-      children: (<Welcome />)
+      children: (<HomePage />)
     });
   },
   name: 'home'
