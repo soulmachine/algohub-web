@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import 'antd/dist/antd.css';
+import Alert from 'antd/lib/alert';
 import Button from 'antd/lib/button';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
@@ -31,7 +32,8 @@ class ProblemPage extends React.Component {
       loading: true,
       lang: "Python",
       mode: "python",
-      code: ""
+      code: "",
+      showAlert: false
     };
   }
   langToMode(lang) {
@@ -94,10 +96,17 @@ class ProblemPage extends React.Component {
     localStorage.setItem(this.state.problem.title_slug+ "-" + this.state.lang, defaultCode);
   }
   runSmallTestcases() {
-
+    if(!Meteor.userId()) {
+      this.setState({showAlert: true});
+    }
   }
   submitCode() {
-
+    if(!Meteor.userId()) {
+      this.setState({showAlert: true});
+    }
+  }
+  closeAlert() {
+    this.setState({showAlert: false});
   }
   render() {
     if (this.state.loading) {
@@ -161,7 +170,12 @@ class ProblemPage extends React.Component {
               <div style={{marginTop: 10, float: "right"}}>
                 <Button onClick={this.runSmallTestcases.bind(this)}><FormattedMessage id="problem.small testcases" defaultMessage="Run Small Testcases"/></Button>
                 <Button type="primary" style={{marginLeft: 10}} onClick={this.submitCode.bind(this)}><FormattedMessage id="general.submit" defaultMessage="Submit"/></Button>
+                { this.state.showAlert ?
+                  <Alert message={this.props.intl.formatMessage({id: "problem.must log in"})} type="error" showIcon closable onClose={this.closeAlert.bind(this)} />
+                  : null
+                }
               </div>
+
             </div>
           </Col>
         </Row>
