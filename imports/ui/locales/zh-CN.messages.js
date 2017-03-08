@@ -91,4 +91,5 @@ module.exports = {
   "verifyemail.verification succeeded": "邮箱验证成功",
   "verifyemail.link expired": "链接已经过期。请登录后点击右上角'设置->账号和密码'，重新发送邮件",
   "problem.reset": "重置",
+  "problem.small testcases": "小数据集测试",
 };

@@ -93,6 +93,12 @@ class ProblemPage extends React.Component {
     this.setState({code: defaultCode});
     localStorage.setItem(this.state.problem.title_slug+ "-" + this.state.lang, defaultCode);
   }
+  runSmallTestcases() {
+
+  }
+  submitCode() {
+
+  }
   render() {
     if (this.state.loading) {
       return <Row style={{marginTop: 20}}>
@@ -122,35 +128,43 @@ class ProblemPage extends React.Component {
             return <Tag color="orange" key={tag}>{tag}</Tag>;
           })}
         </span>
-        <div style={{marginTop: 20}}>
-          <div style={{marginBottom: 10}}>
-            <Select defaultValue={this.state.lang} onChange={this.changeLanguage.bind(this)} style={{ width: 100 }}>
-              { this.state.problem.default_code.map((obj, i) => {
-                return <Select.Option value={obj.lang} key={obj.lang}>{obj.lang}</Select.Option>;
-              })}
-            </Select>
-            <Button type="primary" icon="reload" style={{marginLeft: 10}} onClick={this.resetCode.bind(this)}><FormattedMessage id="problem.reset" defaultMessage="Reset"/></Button>
-          </div>
-          <AceEditor
-            mode={this.state.mode}
-            theme="github"
-            name="algohub_ace_editor"
-            value={this.state.code}
-            onChange={this.changeCode.bind(this)}
-            wrapEnabled= {true}
-            width="80%"
-            fontSize = {14}
-            showPrintMargin = {false}
-            maxLines={200}
-            minLines = {25}
-            editorProps={{$blockScrolling: true}}
-            onLoad={(editor) => {
-              editor.focus();
-              editor.getSession().setUseWrapMode(true);
-            }}
-            style={{borderWidth:1, borderColor: "#CCC", borderStyle: "solid"}}
-          />
-        </div>
+        <Row gutter={16}>
+          <Col span={20} className="gutter-row">
+            <div style={{marginTop: 20}}>
+              <div style={{marginBottom: 10}}>
+                <Select defaultValue={this.state.lang} onChange={this.changeLanguage.bind(this)} style={{ width: 100 }}>
+                  { this.state.problem.default_code.map((obj, i) => {
+                    return <Select.Option value={obj.lang} key={obj.lang}>{obj.lang}</Select.Option>;
+                  })}
+                </Select>
+                <Button type="primary" icon="reload" style={{marginLeft: 10}} onClick={this.resetCode.bind(this)}><FormattedMessage id="problem.reset" defaultMessage="Reset"/></Button>
+              </div>
+              <AceEditor
+                mode={this.state.mode}
+                theme="github"
+                name="algohub_ace_editor"
+                value={this.state.code}
+                onChange={this.changeCode.bind(this)}
+                wrapEnabled= {true}
+                width="100%"
+                fontSize = {14}
+                showPrintMargin = {false}
+                maxLines={200}
+                minLines = {25}
+                editorProps={{$blockScrolling: true}}
+                onLoad={(editor) => {
+                  editor.focus();
+                  editor.getSession().setUseWrapMode(true);
+                }}
+                style={{borderWidth:1, borderColor: "#CCC", borderStyle: "solid"}}
+              />
+              <div style={{marginTop: 10, float: "right"}}>
+                <Button onClick={this.runSmallTestcases.bind(this)}><FormattedMessage id="problem.small testcases" defaultMessage="Run Small Testcases"/></Button>
+                <Button type="primary" style={{marginLeft: 10}} onClick={this.submitCode.bind(this)}><FormattedMessage id="general.submit" defaultMessage="Submit"/></Button>
+              </div>
+            </div>
+          </Col>
+        </Row>
       </div>
     )
   }

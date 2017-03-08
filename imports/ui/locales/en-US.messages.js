@@ -91,4 +91,5 @@ module.exports = {
   "verifyemail.verification succeeded": "E-mail verification succeeded",
   "verifyemail.link expired": "The link has been expired, please resent the password reset E-mail",
   "problem.reset": "Reset",
+  "problem.small testcases": "Run Small Testcases",
 };
