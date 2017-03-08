@@ -16,11 +16,13 @@ module.exports = {
   "general.faq": "常见问题",
   "general.save": "保存",
   "general.title": "标题",
-  "general.acceptance": "通过率",
+  "general.ratio": "通过率",
   "general.difficulty": "难度",
   "general.easy": "容易",
   "general.medium": "中等",
   "general.hard": "较难",
+  "general.tags": "标签",
+  "general.finished": "已完成",
   "header.enter keywords": "Enter keywords to search...",
   'header.problems': '题目',
   "header.qa": "问答",
@@ -88,4 +90,5 @@ module.exports = {
   "verifyemail.verification failed": "邮箱验证失",
   "verifyemail.verification succeeded": "邮箱验证成功",
   "verifyemail.link expired": "链接已经过期。请登录后点击右上角'设置->账号和密码'，重新发送邮件",
-}
+  "problem.reset": "重置",
+};

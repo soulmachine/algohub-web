@@ -28,7 +28,7 @@ class Problems extends React.Component {
         })
       }  else {
         result.forEach(x => {
-          x['acceptance'] = (100 * x.total_accepted/ x.total_submissions).toFixed(2) + '%';
+          x['ratio'] = (100 * x.total_accepted/ x.total_submissions).toFixed(2) + '%(' + x.total_accepted + '/' + x.total_submissions + ')';
           const difficultyId = x.difficulty == 1 ? 'general.easy' : (x.difficulty == 2 ? 'general.medium' : 'general.hard');
           x['difficultyStr'] = this.props.intl.formatMessage({id: difficultyId})
         });
@@ -75,11 +75,11 @@ class Problems extends React.Component {
       sorter: (a, b) => a.title.localeCompare(b.title),
       sortOrder: this.state.sortInfo.column === 'title' && this.state.sortInfo.order,
     }, {
-      title: this.props.intl.formatMessage({id: "general.acceptance"}),
-      dataIndex: 'acceptance',
-      key: 'acceptance',
-      sorter: (a, b) => a.acceptance.localeCompare(b.acceptance),
-      sortOrder: this.state.sortInfo.column === 'acceptance' && this.state.sortInfo.order,
+      title: this.props.intl.formatMessage({id: "general.ratio"}) + "(AC/Submit)",
+      dataIndex: 'ratio',
+      key: 'ratio',
+      sorter: (a, b) => a.ratio.localeCompare(b.ratio),
+      sortOrder: this.state.sortInfo.column === 'ratio' && this.state.sortInfo.order,
     }, {
       title: this.props.intl.formatMessage({id: "general.difficulty"}),
       dataIndex: 'difficultyStr',
@@ -87,6 +87,14 @@ class Problems extends React.Component {
       sorter: (a, b) => a.difficulty - b.difficulty,
       sortOrder: this.state.sortInfo.column === 'difficulty' && this.state.sortInfo.order,
     }];
+    if(Meteor.userId()) {
+      columns.push({
+        title: this.props.intl.formatMessage({id: "general.finished"}),
+        dataIndex: 'finished',
+        key: 'finished',
+        render: (text, record, index) => record.finished ? <Icon type="check" /> : ""
+      });
+    }
     return (
       <Table dataSource={this.state.data} columns={columns} rowKey="_id" loading={this.state.loading} onChange={this.handleChange.bind(this)} pagination={{defaultPageSize: parseInt(Meteor.settings.public.recordsPerPage), total: this.state.totalCount}} />
     )

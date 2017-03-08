@@ -16,11 +16,13 @@ module.exports = {
   "general.faq": "FAQ",
   "general.save": "Save",
   "general.title": "Title",
-  "general.acceptance": "Acceptance",
+  "general.ratio": "Ratio",
   "general.difficulty": "Difficulty",
   "general.easy": "Easy",
   "general.medium": "Medium",
   "general.hard": "Hard",
+  "general.tags": "Tags",
+  "general.finished": "Finished",
   "header.enter keywords": "Enter keywords to search...",
   "header.problems": "Problems",
   "header.qa": "Q&A",
@@ -88,4 +90,5 @@ module.exports = {
   "verifyemail.verification failed": "E-mail verification failed",
   "verifyemail.verification succeeded": "E-mail verification succeeded",
   "verifyemail.link expired": "The link has been expired, please resent the password reset E-mail",
-}
+  "problem.reset": "Reset",
+};
