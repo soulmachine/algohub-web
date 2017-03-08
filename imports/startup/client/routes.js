@@ -7,6 +7,7 @@ import NotFound from '../../ui/components/NotFound';
 import HomePage from '../../ui/pages/HomePage';
 import SigninPage from '../../ui/pages/SigninPage';
 import SignupPage from '../../ui/pages/SignupPage';
+import ProblemPage from '../../ui/pages/ProblemPage';
 import ForgotPassword from '../../ui/components/ForgotPassword';
 import ResetPassword from '../../ui/components/ResetPassword';
 import UserSettings from '../../ui/components/UserSettings';
@@ -30,6 +31,14 @@ FlowRouter.route("/", {
     });
   },
   name: 'home'
+});
+
+FlowRouter.route('/problems/:title_slug', {
+  action(params) {
+    mount(MainLayout, {
+      children: (<ProblemPage title_slug={params.title_slug}/>)
+    });
+  },
 });
 
 loggedInRoutes.route("/notifications/:page?", {

@@ -5,3 +5,4 @@ import './page-nav.less';
 import './responsive.less';
 import './not-found.less';
 import './colors.less';
+import './github-markdown.css';
