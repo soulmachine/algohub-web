@@ -3,6 +3,7 @@ import { Mongo } from 'meteor/mongo';
 
 export const Problems = new Mongo.Collection('problems');
 export const FinishedProblems = new Mongo.Collection('finished_problems');
+export const SubmissionHistory = new Mongo.Collection('submission_history');
 
 if (Meteor.isServer) {
   Problems._ensureIndex({ "title": 1 }, { unique: true });
@@ -32,5 +33,14 @@ if (Meteor.isServer) {
     'getProblem'(title_slug) {
       return Problems.findOne({'title_slug': title_slug});
     },
+    'submitCode'(titleSlug, lang, code) {
+      // TODO: call judge api
+      const judgeResult = {status_code: 5, error_message: "Accepted", elapsed_time: 1234};
+      const problem = Problems.findOne({title_slug: titleSlug}, {fields: {_id: 1, title: 1, title_slug: 1}});
+      const submission = {user_id: Meteor.userId(), problem_id: problem._id, title_slug: problem.title_slug, title: problem.title, lang: lang, code: code, judge_result: judgeResult, createdAt: new Date()};
+      const submissionId = SubmissionHistory.insert(submission);
+      submission["_id"] = submissionId;
+      return submission;
+    }
   });
 }

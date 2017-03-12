@@ -1,11 +1,9 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import 'antd/dist/antd.css';
-import Alert from 'antd/lib/alert';
 import Button from 'antd/lib/button';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
-import Icon from 'antd/lib/icon';
 import Select from 'antd/lib/select';
 import Spin from 'antd/lib/spin';
 import Tag from 'antd/lib/tag';
@@ -25,6 +23,9 @@ import 'brace/mode/haskell';
 import 'brace/mode/scala';
 import 'brace/theme/github';
 
+import JudgeResult from '../components/JudgeResult';
+
+
 class ProblemPage extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +34,9 @@ class ProblemPage extends React.Component {
       loading: true,
       lang: "Python",
       mode: "python",
-      code: ""
+      code: "",
+      judgeResult: null,
+      waiting: false
     };
   }
   langToMode(lang) {
@@ -109,6 +112,17 @@ class ProblemPage extends React.Component {
     if(!Meteor.userId()) {
       return;
     }
+
+    this.setState({waiting: true});
+    Meteor.call('submitCode', this.props.title_slug, this.state.lang, this.state.code, (error, result) => {
+      if(error) {
+        console.log(error);
+        this.setState({waiting: false});
+      } else {
+        console.log(result);
+        this.setState({judgeResult: result, waiting: false});
+      }
+    })
   }
 
   render() {
@@ -177,10 +191,16 @@ class ProblemPage extends React.Component {
               />
               <div style={{marginTop: 10, float: "right"}}>
                 {/*<Button onClick={this.runSmallTestcases.bind(this)}><FormattedMessage id="problem.small testcases" defaultMessage="Run Small Testcases"/></Button>*/}
-                <Button type="primary" style={{marginLeft: 10}} onClick={this.submitCode.bind(this)} disabled={!Meteor.userId()}>{Meteor.userId() ? <FormattedMessage id="problem.submit code" defaultMessage="Submit Code"/> : <FormattedMessage id="problem.cannot submit code" defaultMessage="Submit Code(You have NOT signed in)"/>}</Button>
+                <Button type="primary" style={{marginLeft: 10}} onClick={this.submitCode.bind(this)} disabled={!Meteor.userId() || this.state.waiting}>{Meteor.userId() ? <FormattedMessage id="problem.submit code" defaultMessage="Submit Code"/> : <FormattedMessage id="problem.cannot submit code" defaultMessage="Submit Code(You have NOT signed in)"/>}</Button>
               </div>
-
             </div>
+            { this.state.judgeResult ?
+              <div style={{marginTop: 50, borderTopWidth:1, borderTopColor: "#CCC", borderTopStyle: "solid"}}>
+                <JudgeResult statusCode={this.state.judgeResult.judge_result.status_code} errorMessage={this.state.judgeResult.judge_result.error_message} />
+              </div>
+              :
+              this.state.waiting ? <div style={{marginTop: 50, borderTopWidth:1, borderTopColor: "#CCC", borderTopStyle: "solid"}}><Spin size="large" /></div> : null
+            }
           </Col>
         </Row>
       </div>

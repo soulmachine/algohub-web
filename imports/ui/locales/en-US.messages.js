@@ -95,4 +95,5 @@ module.exports = {
   "problem.small testcases": "Run Small Testcases",
   "problem.submit code": "Submit Code",
   "problem.cannot submit code": "Submit Code(You have NOT signed in)",
+  "judgeresult.judge result": "Judge Result",
 };
