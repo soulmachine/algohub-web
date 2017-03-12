@@ -92,5 +92,6 @@ module.exports = {
   "verifyemail.link expired": "The link has been expired, please resent the password reset E-mail",
   "problem.reset": "Reset",
   "problem.small testcases": "Run Small Testcases",
-  "problem.must log in": "Only logged in user can use this function"
+  "problem.submit code": "Submit Code",
+  "problem.cannot submit code": "Submit Code(You have NOT signed in)",
 };

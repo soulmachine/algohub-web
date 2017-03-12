@@ -92,5 +92,6 @@ module.exports = {
   "verifyemail.link expired": "链接已经过期。请登录后点击右上角'设置->账号和密码'，重新发送邮件",
   "problem.reset": "重置",
   "problem.small testcases": "小数据集测试",
-  "problem.must log in": "只有登录用户才能使用该功能"
+  "problem.submit code": "提交代码",
+  "problem.cannot submit code": "提交代码(您尚未登录)",
 };

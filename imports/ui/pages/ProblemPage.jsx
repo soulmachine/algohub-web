@@ -32,8 +32,7 @@ class ProblemPage extends React.Component {
       loading: true,
       lang: "Python",
       mode: "python",
-      code: "",
-      showAlert: false
+      code: ""
     };
   }
   langToMode(lang) {
@@ -98,15 +97,14 @@ class ProblemPage extends React.Component {
   runSmallTestcases() {
     if(!Meteor.userId()) {
       this.setState({showAlert: true});
+      return;
     }
   }
   submitCode() {
     if(!Meteor.userId()) {
       this.setState({showAlert: true});
+      return;
     }
-  }
-  closeAlert() {
-    this.setState({showAlert: false});
   }
   render() {
     if (this.state.loading) {
@@ -168,12 +166,8 @@ class ProblemPage extends React.Component {
                 style={{borderWidth:1, borderColor: "#CCC", borderStyle: "solid"}}
               />
               <div style={{marginTop: 10, float: "right"}}>
-                <Button onClick={this.runSmallTestcases.bind(this)}><FormattedMessage id="problem.small testcases" defaultMessage="Run Small Testcases"/></Button>
-                <Button type="primary" style={{marginLeft: 10}} onClick={this.submitCode.bind(this)}><FormattedMessage id="general.submit" defaultMessage="Submit"/></Button>
-                { this.state.showAlert ?
-                  <Alert message={this.props.intl.formatMessage({id: "problem.must log in"})} type="error" showIcon closable onClose={this.closeAlert.bind(this)} />
-                  : null
-                }
+                {/*<Button onClick={this.runSmallTestcases.bind(this)}><FormattedMessage id="problem.small testcases" defaultMessage="Run Small Testcases"/></Button>*/}
+                <Button type="primary" style={{marginLeft: 10}} onClick={this.submitCode.bind(this)} disabled={!Meteor.userId()}>{Meteor.userId() ? <FormattedMessage id="problem.submit code" defaultMessage="Submit Code"/> : <FormattedMessage id="problem.cannot submit code" defaultMessage="Submit Code(You have NOT signed in)"/>}</Button>
               </div>
 
             </div>
