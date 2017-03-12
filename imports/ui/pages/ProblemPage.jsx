@@ -9,6 +9,7 @@ import Icon from 'antd/lib/icon';
 import Select from 'antd/lib/select';
 import Spin from 'antd/lib/spin';
 import Tag from 'antd/lib/tag';
+import Tooltip from 'antd/lib/tooltip';
 import marked from 'marked';
 import brace from 'brace';
 import AceEditor from 'react-ace';
@@ -94,18 +95,22 @@ class ProblemPage extends React.Component {
     this.setState({code: defaultCode});
     localStorage.setItem(this.state.problem.title_slug+ "-" + this.state.lang, defaultCode);
   }
+  resetToLastSubmitted() {
+    if(!Meteor.userId()) {
+      return;
+    }
+  }
   runSmallTestcases() {
     if(!Meteor.userId()) {
-      this.setState({showAlert: true});
       return;
     }
   }
   submitCode() {
     if(!Meteor.userId()) {
-      this.setState({showAlert: true});
       return;
     }
   }
+
   render() {
     if (this.state.loading) {
       return <Row style={{marginTop: 20}}>
@@ -144,7 +149,12 @@ class ProblemPage extends React.Component {
                     return <Select.Option value={obj.lang} key={obj.lang}>{obj.lang}</Select.Option>;
                   })}
                 </Select>
-                <Button type="primary" icon="reload" style={{marginLeft: 10}} onClick={this.resetCode.bind(this)}><FormattedMessage id="problem.reset" defaultMessage="Reset"/></Button>
+                <Tooltip title={this.props.intl.formatMessage({id: "problem.reset to default"})}>
+                  <Button type="primary" icon="reload" onClick={this.resetCode.bind(this)} style={{marginLeft: 10}} />
+                </Tooltip>
+                <Tooltip title={this.props.intl.formatMessage({id: "problem.reset to last submitted"})}>
+                  <Button icon="download" onClick={this.resetToLastSubmitted.bind(this)} style={{marginLeft: 10}} disabled={!Meteor.userId()} />
+                </Tooltip>
               </div>
               <AceEditor
                 mode={this.state.mode}
