@@ -49,22 +49,31 @@ class ProblemPage extends React.Component {
     }
   }
   componentDidMount() {
-    Meteor.call('getProblem', this.props.title_slug, (error, result) => {
+    Meteor.call('getProblem', this.props.id, (error, result) => {
       if(error) {
         console.log(error);
       } else {
         const difficultyId = result.difficulty == 1 ? 'general.easy' : (result.difficulty == 2 ? 'general.medium' : 'general.hard');
         result['difficultyStr'] = this.props.intl.formatMessage({id: difficultyId});
-        result.default_code.sort((x,y) => x.lang.localeCompare(y.lang));
-
-        const defaultLanguage = localStorage.getItem(result.title_slug+ "-lang") || "Python";
+        if(result['title'][this.props.intl.locale]) {
+          result['title'] = result['title'][this.props.intl.locale];
+        } else if(result['title'][this.props.intl.locale.substring(0,2)]) {
+          result['title'] = result['title'][this.props.intl.locale.substring(0,2)];
+        } else {
+          result['title'] = result['title']['en'];
+        }
+        if(result['description'][this.props.intl.locale]) {
+          result['description'] = result['description'][this.props.intl.locale];
+        } else if(result['description'][this.props.intl.locale.substring(0,2)]) {
+          result['description'] = result['description'][this.props.intl.locale.substring(0,2)];
+        } else {
+          result['description'] = result['description']['en'];
+        }
+        const defaultLanguage = localStorage.getItem(result._id+ "-lang") || "Python";
         const defaultMode = this.langToMode(defaultLanguage);
-        let defaultCode = localStorage.getItem(result.title_slug+ "-" + defaultLanguage);
+        let defaultCode = localStorage.getItem(result._id+ "-" + defaultLanguage);
         if(!defaultCode) {
-          const tmp = result.default_code.find(x => {
-            return x.lang === defaultLanguage;
-          });
-          defaultCode = tmp.code;
+          defaultCode = result.default_code[defaultLanguage]
         }
         this.setState({problem: result, loading: false, lang: defaultLanguage, mode: defaultMode, code: defaultCode});
       }
@@ -72,13 +81,10 @@ class ProblemPage extends React.Component {
   }
 
   changeLanguage(value) {
-    localStorage.setItem(this.state.problem.title_slug+ "-lang", value);
-    let defaultCode = localStorage.getItem(this.state.problem.title_slug+ "-" + value);
+    localStorage.setItem(this.state.problem._id+ "-lang", value);
+    let defaultCode = localStorage.getItem(this.state.problem._id+ "-" + value);
     if(!defaultCode) {
-      const tmp = this.state.problem.default_code.find(x => {
-        return x.lang === value;
-      });
-      defaultCode = tmp.code;
+      defaultCode = this.state.problem.default_code[value]
     }
     this.setState({
       lang: value,
@@ -87,16 +93,13 @@ class ProblemPage extends React.Component {
     });
   }
   changeCode(value) {
-    localStorage.setItem(this.state.problem.title_slug+ "-" + this.state.lang, value);
+    localStorage.setItem(this.state.problem._id+ "-" + this.state.lang, value);
     this.setState({code: value});
   }
   resetCode() {
-    const tmp = this.state.problem.default_code.find(x => {
-      return x.lang === this.state.lang;
-    });
-    const defaultCode = tmp.code;
+    const defaultCode = this.state.problem.default_code[this.state.lang];
     this.setState({code: defaultCode});
-    localStorage.setItem(this.state.problem.title_slug+ "-" + this.state.lang, defaultCode);
+    localStorage.setItem(this.state.problem._id+ "-" + this.state.lang, defaultCode);
   }
   resetToLastSubmitted() {
     if(!Meteor.userId()) {
@@ -114,7 +117,7 @@ class ProblemPage extends React.Component {
     }
 
     this.setState({waiting: true});
-    Meteor.call('submitCode', this.props.title_slug, this.state.lang, this.state.code, (error, result) => {
+    Meteor.call('submitCode', this.props.id, this.state.lang, this.state.code, (error, result) => {
       if(error) {
         console.log(error);
         this.setState({waiting: false});
@@ -159,8 +162,23 @@ class ProblemPage extends React.Component {
             <div style={{marginTop: 20}}>
               <div style={{marginBottom: 10}}>
                 <Select defaultValue={this.state.lang} onChange={this.changeLanguage.bind(this)} style={{ width: 100 }}>
-                  { this.state.problem.default_code.map((obj, i) => {
-                    return <Select.Option value={obj.lang} key={obj.lang}>{obj.lang}</Select.Option>;
+                  { this.state.problem.default_code['Java'] ?
+                    <Select.Option value="Java" key="Java">Java</Select.Option>
+                    :
+                    null
+                  }
+                  { this.state.problem.default_code['C++'] ?
+                    <Select.Option value="C++" key="C++">C++</Select.Option>
+                    :
+                    null
+                  }
+                  { this.state.problem.default_code['Python'] ?
+                    <Select.Option value="Python" key="Python">Python</Select.Option>
+                    :
+                    null
+                  }
+                  { Object.keys(this.state.problem.default_code).filter(x => x != "Java" && x != "C++" && x != "Python").sort().map((lang, i) => {
+                    return <Select.Option value={lang} key={lang}>{lang}</Select.Option>;
                   })}
                 </Select>
                 <Tooltip title={this.props.intl.formatMessage({id: "problem.reset to default"})}>

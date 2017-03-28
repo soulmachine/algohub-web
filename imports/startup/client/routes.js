@@ -33,10 +33,10 @@ FlowRouter.route("/", {
   name: 'home'
 });
 
-FlowRouter.route('/problems/:title_slug', {
+FlowRouter.route('/problems/:id', {
   action(params) {
     mount(MainLayout, {
-      children: (<ProblemPage title_slug={params.title_slug}/>)
+      children: (<ProblemPage id={params.id}/>)
     });
   },
 });

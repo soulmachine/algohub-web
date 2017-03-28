@@ -31,6 +31,13 @@ class Problems extends React.Component {
           x['ratio'] = (100 * x.total_accepted/ x.total_submissions).toFixed(2) + '%(' + x.total_accepted + '/' + x.total_submissions + ')';
           const difficultyId = x.difficulty == 1 ? 'general.easy' : (x.difficulty == 2 ? 'general.medium' : 'general.hard');
           x['difficultyStr'] = this.props.intl.formatMessage({id: difficultyId})
+          if(x['title'][this.props.intl.locale]) {
+            x['title'] = x['title'][this.props.intl.locale];
+          } else if(x['title'][this.props.intl.locale.substring(0,2)]) {
+            x['title'] = x['title'][this.props.intl.locale.substring(0,2)];
+          } else {
+            x['title'] = x['title']['en'];
+          }
         });
         this.setState({
           data: result,
@@ -62,17 +69,11 @@ class Problems extends React.Component {
   }
   render() {
     const columns = [{
-      title: 'ID',
-      dataIndex: '_id',
-      key: '_id',
-      sorter: (a, b) => a._id - b._id,
-      sortOrder: this.state.sortInfo.column === '_id' && this.state.sortInfo.order,
-    }, {
       title: this.props.intl.formatMessage({id: "general.title"}),
       dataIndex: 'title',
       key: 'title',
-      render: (text, record, index) => <a href={"/problems/" + record.title_slug}>{text}</a>,
-      sorter: (a, b) => a.title.localeCompare(b.title),
+      render: (text, record, index) => <a href={"/problems/" + record._id}>{text}</a>,
+      sorter: (a, b) => a.title.en.localeCompare(b.title.en),
       sortOrder: this.state.sortInfo.column === 'title' && this.state.sortInfo.order,
     }, {
       title: this.props.intl.formatMessage({id: "general.ratio"}) + "(AC/Submit)",
