@@ -138,7 +138,7 @@ class Header extends React.Component {
         <Row>
           <Col lg={4} md={6} sm={24} xs={24}>
             <a href="/" id="logo">
-              <img alt="logo" src="https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg" />
+              <img alt="logo" src="/images/logo.png" style={{width: 64, height: 64}}/>
               <span>AlgoHub</span>
             </a>
           </Col>
