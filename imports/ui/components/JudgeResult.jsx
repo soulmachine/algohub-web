@@ -34,11 +34,13 @@ function JudgeResult({statusCode, errorMessage}) {
         { statusCode != 4 ?
           <div>
           <span style={{fontSize: 25, bold: true, color: "red"}}><FormattedMessage id={messageId} /></span>
-          <div style={{color: "red"}}>{
+          <div style={{color: "red"}}> { errorMessage ?
             errorMessage.split(/\n/).map((line, i) =>{
               return <p key={i}>{line}</p>;
             })
-          }</div>
+            : null
+          }
+          </div>
           </div>
           :
           <span style={{fontSize: 25, bold: true, color: "green"}}><FormattedMessage id="judgeresult.accepted" defaultMessage="Accepted" /></span>
