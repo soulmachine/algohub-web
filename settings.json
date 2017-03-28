@@ -1,5 +1,6 @@
 {
   "reCAPTCHASecretKey": "6Le0jxETAAAAADOK4m1RnQFnvykEciUaZQwuns5w",
+  "JUDGE_URL": "http://172.16.225.173:8080/new/problems",
   "public": {
     "reCAPTCHASiteKey": "6Le0jxETAAAAANoyIxTIsgiG90S0Sz45NOVLm77P",
     "recordsPerPage": 20

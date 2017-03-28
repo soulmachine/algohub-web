@@ -96,4 +96,13 @@ module.exports = {
   "problem.submit code": "Submit Code",
   "problem.cannot submit code": "Submit Code(You have NOT signed in)",
   "judgeresult.judge result": "Judge Result",
+  "judgeresult.compile error": "Compile Error",
+  "judgeresult.runtime error": "Runtime Error",
+  "judgeresult.accepted": "Accepted",
+  "judgeresult.wrong answer": "Wrong Answer",
+  "judgeresult.time limit exceeded": "Time Limit Exceeded",
+  "judgeresult.memory limit exceeded": "Memory Limit Exceeded",
+  "judgeresult.output limit exceeded": "Output Limit Exceeded",
+  "judgeresult.restricted call": "Restricted Call",
+  "judgeresult.code too long": "Code Too Long",
 };

@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { HTTP } from 'meteor/http'
 import { Mongo } from 'meteor/mongo';
 
 export const Problems = new Mongo.Collection('problems');
@@ -41,10 +42,14 @@ if (Meteor.isServer) {
       return Problems.findOne({'_id': id});
     },
     'submitCode'(id, lang, code) {
-      // TODO: call judge api
-      const judgeResult = {status_code: 5, error_message: "Accepted", elapsed_time: 1234};
-      const problem = Problems.findOne({_id: id}, {fields: {_id: 1, title: 1}});
-      const submission = {user_id: Meteor.userId(), problem_id: problem._id, title: problem.title, lang: lang, code: code, judge_result: judgeResult, createdAt: new Date()};
+      const response = HTTP.call("POST", Meteor.settings.JUDGE_URL + '/' + id + '/judge', {data: {language: lang, code, problem_id: id}});
+      const judgeResult = response.data;
+      if(judgeResult.status_code == 4) {
+        Problems.update({_id: id}, { $inc: { total_submissions: 1, total_accepted: 1 } } )
+      } else {
+        Problems.update({_id: id}, { $inc: { total_submissions: 1 } } )
+      }
+      const submission = {user_id: Meteor.userId(), problem_id: id, language: lang, code: code, judge_result: judgeResult, createdAt: new Date()};
       const submissionId = SubmissionHistory.insert(submission);
       submission["_id"] = submissionId;
       return submission;

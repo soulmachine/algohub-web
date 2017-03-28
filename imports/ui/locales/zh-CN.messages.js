@@ -96,4 +96,13 @@ module.exports = {
   "problem.submit code": "提交代码",
   "problem.cannot submit code": "提交代码(您尚未登录)",
   "judgeresult.judge result": "判题结果",
+  "judgeresult.compile error": "编译出错",
+  "judgeresult.runtime error": "运行出错",
+  "judgeresult.accepted": "通过",
+  "judgeresult.wrong answer": "结果错误",
+  "judgeresult.time limit exceeded": "超时",
+  "judgeresult.memory limit exceeded": "内存超过限制",
+  "judgeresult.output limit exceeded": "输出超过限制",
+  "judgeresult.restricted call": "禁止调用敏感API",
+  "judgeresult.code too long": "代码太长",
 };
