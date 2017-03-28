@@ -95,6 +95,8 @@ module.exports = {
   "problem.small testcases": "Run Small Testcases",
   "problem.submit code": "Submit Code",
   "problem.cannot submit code": "Submit Code(You have NOT signed in)",
+  "problem.description": "Description",
+  "problem.submissions": "Submissioins",
   "judgeresult.judge result": "Judge Result",
   "judgeresult.compile error": "Compile Error",
   "judgeresult.runtime error": "Runtime Error",

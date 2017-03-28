@@ -95,6 +95,8 @@ module.exports = {
   "problem.small testcases": "小数据集测试",
   "problem.submit code": "提交代码",
   "problem.cannot submit code": "提交代码(您尚未登录)",
+  "problem.description": "题目描述",
+  "problem.submissions": "提交记录",
   "judgeresult.judge result": "判题结果",
   "judgeresult.compile error": "编译出错",
   "judgeresult.runtime error": "运行出错",

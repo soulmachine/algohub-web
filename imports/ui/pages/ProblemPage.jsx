@@ -6,6 +6,7 @@ import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import Select from 'antd/lib/select';
 import Spin from 'antd/lib/spin';
+import Tabs from 'antd/lib/tabs';
 import Tag from 'antd/lib/tag';
 import Tooltip from 'antd/lib/tooltip';
 import marked from 'marked';
@@ -26,6 +27,9 @@ import 'brace/theme/github';
 import JudgeResult from '../components/JudgeResult';
 
 
+const TabPane = Tabs.TabPane;
+
+
 class ProblemPage extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +40,8 @@ class ProblemPage extends React.Component {
       mode: "python",
       code: "",
       judgeResult: null,
-      waiting: false
+      waiting: false,
+      activeTab: "description"
     };
   }
   langToMode(lang) {
@@ -79,7 +84,9 @@ class ProblemPage extends React.Component {
       }
     })
   }
-
+  changeTab(value) {
+    console.log(value);
+  }
   changeLanguage(value) {
     localStorage.setItem(this.state.problem._id+ "-lang", value);
     let defaultCode = localStorage.getItem(this.state.problem._id+ "-" + value);
@@ -102,11 +109,6 @@ class ProblemPage extends React.Component {
     localStorage.setItem(this.state.problem._id+ "-" + this.state.lang, defaultCode);
   }
   resetToLastSubmitted() {
-    if(!Meteor.userId()) {
-      return;
-    }
-  }
-  runSmallTestcases() {
     if(!Meteor.userId()) {
       return;
     }
@@ -142,7 +144,12 @@ class ProblemPage extends React.Component {
           {this.state.problem._id}. {this.state.problem.title}
         </h2>
         <Row gutter={16}>
-          <Col span={20} dangerouslySetInnerHTML={{__html: marked(this.state.problem.description)}} className="markdown-body gutter-row"></Col>
+          <Col span={20}>
+            <Tabs defaultActiveKey={this.state.activeTab} onChange={this.changeTab.bind(this)}>
+              <TabPane tab={this.props.intl.formatMessage({id: "problem.description"})} key="description"><span dangerouslySetInnerHTML={{__html: marked(this.state.problem.description)}} className="markdown-body gutter-row"></span></TabPane>
+              <TabPane tab={this.props.intl.formatMessage({id: "problem.submissions"})} key="submissions">Content of Tab Pane 2</TabPane>
+            </Tabs>
+          </Col>
           <Col span={4}>
             <ul>
               <li>Total Accepted: {this.state.problem.total_accepted}</li>
