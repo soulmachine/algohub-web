@@ -141,7 +141,7 @@ class ProblemPage extends React.Component {
     return (
       <div>
         <h2>
-          {this.state.problem._id}. {this.state.problem.title}
+          {this.state.problem.title}
         </h2>
         <Row gutter={16}>
           <Col span={20}>
