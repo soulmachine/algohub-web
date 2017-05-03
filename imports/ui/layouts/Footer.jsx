@@ -33,6 +33,9 @@ class Footer extends React.Component {
               </a>
             </div>
             <div>
+              <a target="_blank " href="https://github.com/algohub">Github</a>
+            </div>
+            <div>
               <a target="_blank " href="https://weibo.com/algohub">
                 微博
               </a>
